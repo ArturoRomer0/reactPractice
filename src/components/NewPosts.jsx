@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import classes from "./NewPosts.module.css";
 
 function NewPosts(props) {   

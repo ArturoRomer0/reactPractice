@@ -1,28 +1,44 @@
 import { useState } from "react";
+
 import Post from "./Post";
-import classes from "./PostsList.module.css";
 import NewPosts from "./NewPosts";
+import Modal from "./Modal";
+import classes from "./PostsList.module.css";
 
 
 function PostsList() {
-const [enteredBody, setEnteredBody] = useState([]);
-const [enteredAuthor, setEnteredAuthor] = useState([]);
+  const [modalIsVisible, setModalIsVisible] = useState(true);
+  const [enteredBody, setEnteredBody] = useState('');
+  const [enteredAuthor, setEnteredAuthor] = useState('');
 
-function changeBodyHandler(event) {
+  function hideModalHandler() {
+    setModalIsVisible(false);
+  }
+
+  function changeBodyHandler(event) {
     setEnteredBody(event.target.value);
-}
+  }
 
-function changeAuthorHandler(event) {
+  function changeAuthorHandler(event) {
     setEnteredAuthor(event.target.value);
-}
+  }
 
   return (
-    <>  
-        <NewPosts onBodyChange ={changeBodyHandler} onAuthorChange ={changeAuthorHandler}/>
-        <ul className={classes.posts}>
-            <Post author={enteredAuthor} body={enteredBody} />
-            <Post author={enteredAuthor} body={enteredBody} />
-        </ul>
+    <>
+    
+    {modalIsVisible && (
+      <Modal onClose={hideModalHandler}>
+        <NewPosts
+          onBodyChange={changeBodyHandler}
+          onAuthorChange={changeAuthorHandler}
+        />  
+      </Modal>
+    )}
+
+      <ul className={classes.posts}>
+        <Post author={enteredAuthor} body={enteredBody} />
+        <Post author="Manuel" body="Check out the full course!" />
+      </ul>
     </>
   );
 }
